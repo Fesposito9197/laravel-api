@@ -1,0 +1,52 @@
+@extends('layouts.admin')
+
+@section('content')
+    
+    <div class="container">
+        <h1>Modifica: {{$project->title}}</h1>
+        @include('partials.error')
+        <form action="{{route('admin.projects.update' , $project )}}" method="post" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="mb-3">
+                <label for="title" class="form-label">Titolo</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Modifica il titolo del progetto" value="{{old('title' , $project->title )}}">
+            </div>
+            <div class="mb-3">
+                <label for="client_name" class="form-label">Cliente</label>
+                <input type="text" class="form-control" id="client_name" name="client_name" placeholder="Modifica nome del cliente" value="{{old('client_name' , $project->client_name)}}">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Modifica la descrizione del progetto</label>
+                <textarea class="form-control" id="description" name="description" rows="10">{{old('description' , $project->description)}}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="cover_image" class="form-label">Aggiungi un'immagine</label>
+                <input type="file" class="form-control" id="cover_image" name="cover_image"  value="{{old('cover_image')}}">
+            </div>
+            <div class="mb-3">
+                <label for="type_id" class="form-label">Tipologia</label>
+                <select class="form-select" name="type_id" id="type_id" aria-label="Default select example">
+                    <option value="">Senza tipologia</option>
+                    @foreach ($types as $type)
+                    <option value="{{$type->id}}" {{old('type_id' , $project->type_id) == $type->id ? 'selected' : ''}} >{{$type->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <h5>Tecnologia/e usata/e</h5>
+                @foreach ($technologies as $technology)
+                    <div class="form-check form-check-inline">
+                        @if ($errors->any() )
+                            <input class="form-check-input" type="checkbox" id="{{$technology->slug}}" name="technologies[]" value="{{$technology->id}}" {{in_array( $technology->id , old('technologies',[])) ? 'checked' : ''}}>
+                        @else
+                            <input class="form-check-input" type="checkbox" id="{{$technology->slug}}" name="technologies[]" value="{{$technology->id}}" {{$project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                        @endif
+                            <label class="form-check-label" for="{{$technology->slug}}">{{$technology->name}}</label>
+                    </div>
+                @endforeach
+            </div>
+            <button type="submit" class="btn btn-success">Salva</button>
+        </form>    
+    </div>
+@endsection                           
