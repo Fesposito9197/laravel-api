@@ -21,7 +21,7 @@
         <p class="card-text">
           @if ($project->technologies)
             @foreach ($project->technologies as $technology)
-            <span class="badge rounded-pill text-bg-dark"><a href="#" class="text-white text-decoration-none">{{$technology->name}}</a></span>
+            <span class="badge rounded-pill text-bg-dark"><a href="{{route('admin.technologies.show' , $project)}}" class="text-white text-decoration-none">{{$technology->name}}</a></span>
             
             @endforeach
           @else
@@ -47,7 +47,7 @@
         <p class="card-text">
           @if ($project->technologies)
             @foreach ($project->technologies as $technology)
-            <span class="badge rounded-pill text-bg-dark"><a href="#" class="text-white text-decoration-none">{{$technology->name}}</a></span>
+            <span class="badge rounded-pill text-bg-dark"><a href="{{route('admin.technologies.show', $project)}}" class="text-white text-decoration-none">{{$technology->name}}</a></span>
             
             @endforeach
           @else
