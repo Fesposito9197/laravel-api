@@ -13,7 +13,7 @@ class Project extends Model
     protected $appends = ['image_url'];
     protected function getImageUrlAttribute()
     {
-        return $this->cover_image ? asset("storage/$this->cover_image") : null;
+        return $this->cover_image ? asset("storage/$this->cover_image") : "https://via.placeholder.com/150?text=Immagine+mancante";
     }
     public function type()
     {
